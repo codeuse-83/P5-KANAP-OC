@@ -29,5 +29,30 @@ fetch(`http://localhost:3000/api/products/${currentId}`)
     console.log(err)
 });
 
+// Fonction alerte du choix aprés l'ajout au panier.
+function afterAdd() {
+    if (confirm("Le produit a bien été ajouté à votre panier.")) {
+        window.location.href="../html/cart.html"
+    } else {
+        window.location.href="../html/index.html"
+    }
+}
+
+// Ajout du produit dans le panier.
+function addToCart() {
+    //Paramètres actuels du produit
+    let currentProduct = {
+        id : currentId,
+        color : document.getElementById("colors").value,
+        quantity :document.getElementById("quantity").value
+    };
+    let cart = [];
+    // Alerte si la couleur et la quantité n'est pas séléctionnée
+    if (currentProduct.color == "" || currentProduct.quantity <= 0 || currentProduct.quantity > 100) {
+       alert("Veuillez séléctionner une couleur et une quantité");
+       return 
+    }
+}
+
 
 
