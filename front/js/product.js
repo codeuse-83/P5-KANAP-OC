@@ -52,7 +52,27 @@ function addToCart() {
        alert("Veuillez séléctionner une couleur et une quantité");
        return 
     }
+
+    // Vérifier si le produit est dans le panier avec la même couleur afin de modifier que la quantité
+    if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+        for (i in cart) {
+            if (cart[i].id == product_client.id && cart[i].color == product_client.color) {
+                cart[i].quantity = parseInt(cart[i].quantity) + parseInt(product_client.quantity);
+                localStorage.setItem("product_client", JSON.stringify(cart));
+                afterAdd();
+                return
+            }
+        };
+    };
+    if (currentProduct.color != "" && currentProduct.quantity > 0 && currentProduct.quantity < 101) {
+       cart.push(currentProduct);
+       localS.torage.setItem("product_client", JSON.stringify(cart)) 
+       afterAdd();
+    }
 }
+
+document.getElementById("addToCart").addEventListener("click", addToCart);
 
 
 
