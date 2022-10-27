@@ -1,8 +1,8 @@
-// Récupération de l'ID dans l'URL avec URLSearchParams.
+//Récupération de l'ID dans l'url avec URLSearchParams.
 var url = new URL(window.location.href);
 var currentId = url.searchParams.get("id");
 
-//Appel de l'API pour recevoir les données du produit possédant l'ID récupéré et ajourt de ses valeurs dans le HTML.
+//Appel de l'API pour recevoir les données du produit possédant l'ID récupéré et ajout de ses valeurs dans le html.
 fetch(`http://localhost:3000/api/products/${currentId}`)
 .then(function(res) {
     if (res.ok) {
@@ -17,7 +17,7 @@ fetch(`http://localhost:3000/api/products/${currentId}`)
     imageProduct.setAttribute("src",`${value.imageUrl}`);
     imageProduct.setAttribute("alt",`${value.altTxt}`);
     document.getElementsByClassName("item__img")[0].appendChild(imageProduct);
-    let colorOptions = document.getElementById("color");
+    let colorOptions = document.getElementById("colors");
     for (i in value.colors) {
         let newColor = document.createElement("option");
         newColor.setAttribute("value",value.colors[i]);
@@ -29,32 +29,32 @@ fetch(`http://localhost:3000/api/products/${currentId}`)
     console.log(err)
 });
 
-// Fonction alerte du choix aprés l'ajout au panier.
+//Fonction alerte choix après ajout au panier
 function afterAdd() {
-    if (confirm("Le produit a bien été ajouté à votre panier.")) {
+    if (confirm("Le produit a bien été ajouté a votre panier.\nVoulez-vous aller directement au panier?")) {
         window.location.href="../html/cart.html"
     } else {
         window.location.href="../html/index.html"
     }
 }
 
-// Ajout du produit dans le panier.
+//Ajout du produit au panier
 function addToCart() {
     //Paramètres actuels du produit
     let currentProduct = {
         id : currentId,
         color : document.getElementById("colors").value,
-        quantity :document.getElementById("quantity").value
+        quantity : document.getElementById("quantity").value
     };
     let cart = [];
-    // Alerte si la couleur et la quantité n'est pas séléctionnée
+    //Alerte de non sélection de couleur et quantité
     if (currentProduct.color == "" || currentProduct.quantity <= 0 || currentProduct.quantity > 100) {
-       alert("Veuillez séléctionner une couleur et une quantité");
-       return 
+        alert("Veuillez sélectionner une couleur et une quantité");
+        return
     }
-
-     //Vérifier si le produit est dans le panier avec la même couleur afin de modifier que la quantité
-     if (localStorage.getItem("cart")) {
+    
+    //Vérifie si il y a déja le produit dans le panier avec la même couleur pour ne modifier que la quantité
+    if (localStorage.getItem("cart")) {
         cart = JSON.parse(localStorage.getItem("cart"));
         for (i in cart) {
             if (cart[i].id == product_client.id && cart[i].color == product_client.color) {
@@ -73,7 +73,3 @@ function addToCart() {
 }
 
 document.getElementById("addToCart").addEventListener("click", addToCart);
-
-
-
-
